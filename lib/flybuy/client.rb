@@ -12,17 +12,26 @@ module Flybuy
 
     def get(path, query = {})
       url = "#{FLYBUY_ENDPOINT}#{path}"
-      JSON.parse(HTTParty.get(url, headers: headers, query: query).body, symbolize_names: true)
+      JSON.parse(
+        HTTParty.get(url, headers: headers, query: query).body,
+        symbolize_names: true
+      )
     end
 
     def patch(path, body)
       url = "#{FLYBUY_ENDPOINT}#{path}"
-      HTTParty.patch(url, headers: headers, body: body)
+      JSON.parse(
+        HTTParty.patch(url, headers: headers, body: body).body,
+        symbolize_names: true
+      )
     end
 
     def post(path, body)
       url = "#{FLYBUY_ENDPOINT}#{path}"
-      HTTParty.post(url, headers: headers, body: body)
+      JSON.parse(
+        HTTParty.post(url, headers: headers, body: body).body,
+        symbolize_names: true
+      )
     end
 
     private

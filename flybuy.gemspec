@@ -3,7 +3,7 @@
 require_relative 'lib/flybuy/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'ruby-flybuy-api'
+  spec.name          = 'flybuy'
   spec.version       = Flybuy::VERSION
   spec.authors       = ['Keith Yoder']
   spec.email         = ['keith@radiusnetworks.com']

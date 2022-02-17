@@ -25,6 +25,23 @@ module Flybuy
       ATTRIBUTES
     end
 
+    def partner_identifier_without_dashes
+      return if @partner_identifier.nil?
+      return @partner_identifier if @partner_identifier.split('-').size == 2
+
+      @partner_identifier.gsub('-', '').gsub('*', '-')
+    end
+
+    def update(attributes = {})
+      response = @client.patch(
+        "sites/#{id}",
+        {
+          data: attributes
+        }
+      )
+      self.attributes = response[:data]
+    end
+
     def self.all(token)
       @client = Flybuy::Client.new(token)
       @sites = []
@@ -35,6 +52,20 @@ module Flybuy
         next_url = response[:pages][:next]
       end
       @sites
+    end
+
+    def self.find(partner_identifier)
+      @sites.detect { |site| partner_identifier == site.partner_identifier_without_dashes }
+    end
+
+    def self.create(hash)
+      response = @client.post(
+        'sites/',
+        {
+          data: hash
+        }
+      )
+      Flybuy::Site.new(@client, response)
     end
   end
 end

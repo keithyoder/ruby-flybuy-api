@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-flybuy-api (0.0.1)
+    flybuy (0.0.1)
       activemodel
       httparty
 
@@ -50,9 +50,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  flybuy!
   rake (~> 12.0)
   rspec (~> 3.0)
-  ruby-flybuy-api!
 
 BUNDLED WITH
    2.1.4

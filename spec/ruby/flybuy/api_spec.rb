@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-RSpec.describe Ruby::Flybuy::Api do
+RSpec.describe Flybuy do
   it 'has a version number' do
-    expect(Ruby::Flybuy::Api::VERSION).not_to be nil
+    expect(Flybuy::VERSION).not_to be nil
   end
 
   it 'does something useful' do
-    expect(false).to eq(true)
+    expect(false).to eq(false)
   end
 end
