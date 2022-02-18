@@ -3,7 +3,7 @@
 require 'active_model'
 require 'flybuy/base'
 require 'flybuy/client'
-require 'flybuy/site_list'
+require 'flybuy/sites_list'
 
 module Flybuy
   class Site
@@ -39,7 +39,7 @@ module Flybuy
 
     def self.all
       @client = Flybuy.client
-      @sites = Flybuy::SiteList.new
+      @sites = Flybuy::SitesList.new
       next_url = 'sites/'
       until next_url.nil?
         response = @client.get(next_url.gsub(Flybuy::Client::FLYBUY_ENDPOINT, ''))

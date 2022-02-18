@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Flybuy
-  class SiteList < Array
+  class SitesList < Array
     def find(partner_identifier)
       detect { |site| partner_identifier == site.partner_identifier_without_dashes }
     end
