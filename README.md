@@ -1,15 +1,15 @@
 # Ruby::Flybuy::Api
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ruby/flybuy/api`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem provides access to the Flybuy REST API.  Documentation for this API can be found [here](https://www.radiusnetworks.com/developers/flybuy/#/?id=flybuy-developer-documentation)
 
-TODO: Delete this and the text above, and describe your gem
+This is a work-in-progress.  Not all API funcionality is currently available in this gem.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruby-flybuy-api'
+gem 'flybuy'
 ```
 
 And then execute:
@@ -18,11 +18,53 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ruby-flybuy-api
+    $ gem install flybuy
 
 ## Usage
 
-TODO: Write usage instructions here
+Initialize the gem with your API token:
+
+```ruby
+Flybuy.token=[YOUR_TOKEN]
+```
+
+### Sites
+
+#### List of sites
+
+```ruby
+Flybuy::Site::all
+```
+
+#### Create site
+
+These are the required attributes.  You can send any of the other attributes listed in the [documentation](https://www.radiusnetworks.com/developers/flybuy/#/api/v1/sites?id=create-a-site).
+
+```ruby
+Flybuy::Site.create(
+  {
+    project_id: 100,
+    name: 'My Site',
+    partner_identifier: '1234',
+    full_address: '821 Hillcrest Lane, Elsinore, CA 92330',
+    phone: '951-245-1835',
+    latitude: 44.574352,
+    longitude: -81.193817,
+    timezone: 'America/Los_Angeles',
+  }
+)
+```
+
+#### Update site
+
+```ruby
+Flybuy::Site.update(
+  id: 2945,
+  attributes: {
+    name: 'My Site',
+  }
+)
+```
 
 ## Development
 
