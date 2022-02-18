@@ -3,6 +3,7 @@
 require 'active_model'
 require 'flybuy/base'
 require 'flybuy/client'
+require 'flybuy/sites_list'
 
 module Flybuy
   class Site
@@ -38,7 +39,7 @@ module Flybuy
 
     def self.all
       @client = Flybuy.client
-      @sites = []
+      @sites = Flybuy::SitesList.new
       next_url = 'sites/'
       until next_url.nil?
         response = @client.get(next_url.gsub(Flybuy::Client::FLYBUY_ENDPOINT, ''))
@@ -48,8 +49,10 @@ module Flybuy
       @sites
     end
 
-    def self.find(partner_identifier)
-      @sites.detect { |site| partner_identifier == site.partner_identifier_without_dashes }
+    def self.find_by_partner_identifier(partner_identifier)
+      client = Flybuy.client
+      res = client.get('sites', { partner_identifier: partner_identifier })
+      return Flybuy::Site.new(client, res[:data].first) if res[:data].present?
     end
 
     def self.create(hash)

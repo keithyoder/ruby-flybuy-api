@@ -36,6 +36,11 @@ Flybuy.token=[YOUR_TOKEN]
 Flybuy::Site::all
 ```
 
+#### Find by partner_identifier
+```ruby
+Flybuy::Site::find_by_partner_identifier(partner_identifier)
+```
+
 #### Create site
 
 These are the required attributes.  You can send any of the other attributes listed in the [documentation](https://www.radiusnetworks.com/developers/flybuy/#/api/v1/sites?id=create-a-site).
@@ -64,6 +69,18 @@ Flybuy::Site.update(
     name: 'My Site',
   }
 )
+```
+
+### SitesList
+
+The result of `Flybuy::Site::all`.  This is an array with two additional methods:
+
+```ruby
+sites_list.find(partner_identifier)
+```
+
+```ruby
+sites_list.live
 ```
 
 ## Development
