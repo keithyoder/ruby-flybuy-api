@@ -33,17 +33,11 @@ module Flybuy
     end
 
     def update(attributes = {})
-      response = @client.patch(
-        "sites/#{id}",
-        {
-          data: attributes
-        }
-      )
-      self.attributes = response[:data]
+      self.class.update(site: self, attributes: attributes)
     end
 
-    def self.all(token)
-      @client = Flybuy::Client.new(token)
+    def self.all
+      @client = Flybuy.client
       @sites = []
       next_url = 'sites/'
       until next_url.nil?
@@ -66,6 +60,17 @@ module Flybuy
         }
       )
       Flybuy::Site.new(@client, response)
+    end
+
+    def self.update(id: nil, site: nil, attributes: {})
+      @client = Flybuy.client
+      site_id = site.present? ? site.id : id
+      response = @client.patch("sites/#{site_id}", { data: attributes })
+      if site.present?
+        site.attributes = response[:data]
+      else
+        Flybuy::Site.new(@client, response[:data])
+      end
     end
   end
 end
