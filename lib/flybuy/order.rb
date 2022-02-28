@@ -33,7 +33,7 @@ module Flybuy
       response = client.get('orders', { partner_identifier: partner_identifier })
       return nil if response[:data].empty?
 
-      Flybuy::Order.new(client: client, data: response[:data])
+      Flybuy::Order.new(client: client, data: response[:data].first)
     end
 
     def self.find(id)
