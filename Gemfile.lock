@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    flybuy (0.0.2)
+    flybuy (0.0.3)
       activemodel
 
 GEM

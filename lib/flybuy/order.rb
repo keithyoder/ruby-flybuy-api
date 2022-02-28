@@ -17,37 +17,40 @@ module Flybuy
                     delivery_errored_at delivery_identifier delivery_source].freeze
     attr_accessor(*ATTRIBUTES)
 
-    def initialize(partner_identifier = nil)
-      @client = Flybuy::Client.new
-      return if partner_identifier.nil?
+    def initialize(client: nil, data: nil)
+      @client = client || Flybuy.client
+      return if data.nil?
 
-      find_order_by_partner_identifier(partner_identifier)
+      self.attributes = data
     end
 
     def attribute_list
       ATTRIBUTES
     end
 
-    def find_order_by_partner_identifier(partner_identifier)
-      response = @client.get('orders', { partner_identifier: partner_identifier })
-      return nil if response.parsed_response['data'].empty?
+    def self.find_by_partner_identifier(partner_identifier)
+      client = Flybuy.client
+      response = client.get('orders', { partner_identifier: partner_identifier })
+      return nil if response[:data].empty?
 
-      puts response.parsed_response['data'].first.deep_symbolize_keys
-      self.attributes = response.parsed_response['data'].first.deep_symbolize_keys
+      Flybuy::Order.new(client: client, data: response[:data])
     end
 
-    def update_state(new_state)
+    def self.find(id)
+      client = Flybuy.client
+      response = client.get("orders/#{id}")
+      return nil if response[:data].empty?
+
+      Flybuy::Order.new(client: client, data: response[:data])
+    end
+
+    def update_order_state(new_state)
       return if order_id.nil?
 
-      @client.post(
-        'events',
-        {
-          data: {
-            order_id: order_id,
-            event_type: :state_change,
-            state: new_state
-          }
-        }
+      Flybuy::OrderEvent.update_order_state(
+        order_id: order_id,
+        order_state: new_state,
+        client: @client
       )
     end
   end

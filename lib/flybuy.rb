@@ -4,6 +4,7 @@ require_relative './flybuy/base'
 require_relative './flybuy/client'
 require_relative './flybuy/version'
 require_relative './flybuy/order'
+require_relative './flybuy/order_event'
 require_relative './flybuy/site'
 
 module Flybuy

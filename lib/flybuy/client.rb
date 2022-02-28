@@ -43,8 +43,10 @@ module Flybuy
     end
 
     def parse_response(res)
-      parsed_response = JSON.parse(res.body, symbolize_names: true)
-      raise StandardError, parsed_response unless res.is_a?(Net::HTTPSuccess) && parsed_response.keys.exclude?(:errors)
+      parsed_response = JSON.parse(res.body, symbolize_names: true) if res.body.present?
+      unless res.is_a?(Net::HTTPSuccess) && (parsed_response.blank? || parsed_response.keys.exclude?(:errors))
+        raise StandardError, parsed_response
+      end
 
       parsed_response
     end
