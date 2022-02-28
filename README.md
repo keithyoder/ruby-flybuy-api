@@ -83,6 +83,32 @@ sites_list.find(partner_identifier)
 sites_list.live
 ```
 
+### Orders
+
+#### Find
+
+```ruby
+Flybuy::Order::find(order_id)
+```
+
+#### Find by partner_identifier
+
+```ruby
+Flybuy::Order::find_by_partner_identifier(partner_identifier)
+```
+
+#### Update order state (with a Flybuy::Order object)
+
+```ruby
+order.update_order_state(new_state)
+```
+
+#### Update order state (with a Flybuy order id)
+
+```ruby
+Flybuy::OrderEvent.update_order_state(order_id: id, order_state: new_state)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

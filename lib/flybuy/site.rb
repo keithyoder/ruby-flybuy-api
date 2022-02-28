@@ -9,6 +9,7 @@ module Flybuy
   class Site
     include ::ActiveModel::Model
     include ::ActiveModel::Serializers::JSON
+    include ActiveModel::Dirty
     include Flybuy::Base
     ATTRIBUTES = %i[name partner_identifier project_id project_name premises_coordinates overlay_photo_url
                     overlay_photo_coordinates id full_address latitude longitude instructions description
@@ -16,6 +17,8 @@ module Flybuy
                     drive_thru_type order_created_minutes order_reminder_minutes postarrival_seconds
                     prearrival_seconds prearrival_tag_ids operational_status timezone].freeze
     attr_accessor(*ATTRIBUTES)
+
+    define_attribute_methods :name, :partner_identifier
 
     def initialize(client, hash)
       @client = client
