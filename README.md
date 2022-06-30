@@ -36,6 +36,11 @@ Flybuy.token=[YOUR_TOKEN]
 Flybuy::Site::all
 ```
 
+#### Find by site_id
+```ruby
+Flybuy::Site::find(site_id)
+```
+
 #### Find by partner_identifier
 ```ruby
 Flybuy::Site::find_by_partner_identifier(partner_identifier)
@@ -107,6 +112,14 @@ order.update_order_state(new_state)
 
 ```ruby
 Flybuy::OrderEvent.update_order_state(order_id: id, order_state: new_state)
+```
+
+### Archived Orders
+
+#### Get archived order by partner_identifier
+
+```ruby
+Flybuy::ArchivedOrder.find_by_partner_identifier(partner_identifier, date_range)
 ```
 
 ## Development

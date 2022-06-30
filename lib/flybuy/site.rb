@@ -58,6 +58,12 @@ module Flybuy
       return Flybuy::Site.new(client, res[:data].first) if res[:data].present?
     end
 
+    def self.find(site_id)
+      client = Flybuy.client
+      res = client.get("sites/#{site_id}")
+      return Flybuy::Site.new(client, res[:data]) if res[:data].present?
+    end
+
     def self.create(hash)
       response = @client.post(
         'sites/',

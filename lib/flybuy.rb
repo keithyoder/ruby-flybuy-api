@@ -6,6 +6,8 @@ require_relative './flybuy/version'
 require_relative './flybuy/order'
 require_relative './flybuy/order_event'
 require_relative './flybuy/site'
+require_relative './flybuy/archived_order'
+require_relative './flybuy/customer'
 
 module Flybuy
   class << self
