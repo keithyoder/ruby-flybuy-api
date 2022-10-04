@@ -28,6 +28,14 @@ module Flybuy
       ATTRIBUTES
     end
 
+    def self.create(**params)
+      client = Flybuy.client
+      response = client.post('orders', data: params)
+      return nil if response[:data].empty?
+
+      Flybuy::Order.new(client: client, data: response[:data])
+    end
+
     def self.find_by_partner_identifier(partner_identifier)
       client = Flybuy.client
       response = client.get('orders', { partner_identifier: partner_identifier })
