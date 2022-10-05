@@ -114,10 +114,22 @@ Flybuy::Order::create(**kwargs)
 order.update_order_state(new_state)
 ```
 
+#### Update customer state (with a Flybuy::Order object)
+
+```ruby
+order.update_customer_state(new_state)
+```
+
 #### Update order state (with a Flybuy order id)
 
 ```ruby
 Flybuy::OrderEvent.update_order_state(order_id: id, order_state: new_state)
+```
+
+#### Update customer state (with a Flybuy order id)
+
+```ruby
+Flybuy::OrderEvent.update_customer_state(order_id: id, order_state: new_state)
 ```
 
 ### Archived Orders
