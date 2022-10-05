@@ -61,5 +61,15 @@ module Flybuy
         client: @client
       )
     end
+
+    def update_customer_state(new_state)
+      return if order_id.nil?
+
+      Flybuy::OrderEvent.update_customer_state(
+        order_id: order_id,
+        customer_state: new_state,
+        client: @client
+      )
+    end
   end
 end
