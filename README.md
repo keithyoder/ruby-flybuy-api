@@ -108,6 +108,12 @@ Flybuy::Order::find_by_partner_identifier(partner_identifier)
 Flybuy::Order::create(**kwargs)
 ```
 
+#### Update (with a Flybuy::Order object)
+
+```ruby
+order.update(**kwargs)
+```
+
 #### Update order state (with a Flybuy::Order object)
 
 ```ruby

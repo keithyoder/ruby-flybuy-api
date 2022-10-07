@@ -25,6 +25,11 @@ module Flybuy
       perform_request(uri, Net::HTTP::Post.new(uri), body)
     end
 
+    def put(path, body)
+      uri = URI("#{FLYBUY_ENDPOINT}#{path}")
+      perform_request(uri, Net::HTTP::Put.new(uri), body)
+    end
+
     private
 
     def authorization
