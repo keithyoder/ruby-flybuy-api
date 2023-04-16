@@ -146,6 +146,15 @@ Flybuy::OrderEvent.update_customer_state(order_id: id, order_state: new_state)
 Flybuy::ArchivedOrder.find_by_partner_identifier(partner_identifier, date_range)
 ```
 
+### Webhooks
+
+#### Authenticate a Flybuy webhook
+
+```ruby
+Flybuy::WebhookAuthentication.new(request).authentic?(token='token', hmac_key='base64 key')
+```
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

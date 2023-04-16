@@ -8,6 +8,7 @@ require_relative './flybuy/order_event'
 require_relative './flybuy/site'
 require_relative './flybuy/archived_order'
 require_relative './flybuy/customer'
+require_relative './flybuy/webhook_authentication'
 
 module Flybuy
   class << self
