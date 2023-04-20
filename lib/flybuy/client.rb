@@ -4,29 +4,30 @@ require 'net/http'
 
 module Flybuy
   class Client
-    FLYBUY_ENDPOINT = 'https://flybuy.radiusnetworks.com/api/v1/'
-    def initialize(access_token = nil)
+    attr_accessor :url
+    def initialize(access_token = nil, url = nil)
       @access_token = access_token || ENV['FLYBUY_ACCESS_TOKEN']
+      @url = url || 'https://flybuy.radiusnetworks.com/api/v1/'
     end
 
     def get(path, query = {})
-      uri = URI("#{FLYBUY_ENDPOINT}#{path}")
+      uri = URI("#{@url}#{path}")
       uri.query = URI.encode_www_form(query) unless query == {}
       perform_request(uri, Net::HTTP::Get.new(uri))
     end
 
     def patch(path, body)
-      uri = URI("#{FLYBUY_ENDPOINT}#{path}")
+      uri = URI("#{@url}#{path}")
       perform_request(uri, Net::HTTP::Patch.new(uri), body)
     end
 
     def post(path, body)
-      uri = URI("#{FLYBUY_ENDPOINT}#{path}")
+      uri = URI("#{@url}#{path}")
       perform_request(uri, Net::HTTP::Post.new(uri), body)
     end
 
     def put(path, body)
-      uri = URI("#{FLYBUY_ENDPOINT}#{path}")
+      uri = URI("#{@url}#{path}")
       perform_request(uri, Net::HTTP::Put.new(uri), body)
     end
 
