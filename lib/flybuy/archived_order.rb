@@ -33,7 +33,7 @@ module Flybuy
       @archived_orders = []
       next_url = "archived_orders?start_time=#{range.begin.iso8601}&end_time=#{range.end.iso8601}"
       until next_url.nil?
-        response = @client.get(next_url.gsub(Flybuy::Client::FLYBUY_ENDPOINT, ''))
+        response = @client.get(next_url.gsub(@client.url, ''))
         @archived_orders.concat(response[:data].collect { |site| Flybuy::ArchivedOrder.new(@client, site) })
         next_url = response[:pages][:next]
       end

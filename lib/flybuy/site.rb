@@ -45,7 +45,7 @@ module Flybuy
       @sites = Flybuy::SitesList.new
       next_url = 'sites/'
       until next_url.nil?
-        response = @client.get(next_url.gsub(Flybuy::Client::FLYBUY_ENDPOINT, ''))
+        response = @client.get(next_url.gsub(@client.url, ''))
         @sites.concat(response[:data].collect { |site| Flybuy::Site.new(@client, site) })
         next_url = response[:pages][:next]
       end
