@@ -8,8 +8,8 @@ module Flybuy
       @request = request
     end
 
-    def authentic?(token = nil, hmac_key = nil)
-      return true if token.empty? && hmac_key.empty?
+    def authentic?(token: nil, hmac_key: nil)
+      return true if token.blank? && hmac_key.blank?
       return false if token.present? && (token != authorization_token)
 
       if hmac_key.present?
