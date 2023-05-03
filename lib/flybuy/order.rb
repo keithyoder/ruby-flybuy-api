@@ -56,7 +56,15 @@ module Flybuy
       return if order_id.nil?
 
       client = Flybuy.client
-      response = client.put("orders/#{order_id}", { data: params })
+      response = client.put(
+        "orders/#{order_id}",
+        {
+          data: params.except(:taggable_keywords),
+          metadata: {
+            taggable_keywords: params[:taggable_keywords]
+          }
+        }
+      )
       return nil if response[:data].empty?
 
       Flybuy::Order.new(client: client, data: response[:data])
