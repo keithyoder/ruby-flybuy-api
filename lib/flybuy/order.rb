@@ -30,7 +30,7 @@ module Flybuy
 
     def self.create(**params)
       client = Flybuy.client
-      response = client.post('orders', data: params)
+      response = client.post(create_endpoint(params), create_or_update_payload(params))
       return nil if response[:data].empty?
 
       Flybuy::Order.new(client: client, data: response[:data])
@@ -56,15 +56,7 @@ module Flybuy
       return if order_id.nil?
 
       client = Flybuy.client
-      response = client.put(
-        "orders/#{order_id}",
-        {
-          data: params.except(:taggable_keywords),
-          metadata: {
-            taggable_keywords: params[:taggable_keywords]
-          }
-        }
-      )
+      response = client.put("orders/#{order_id}", create_or_update_payload(params))
       return nil if response[:data].empty?
 
       Flybuy::Order.new(client: client, data: response[:data])
@@ -88,6 +80,23 @@ module Flybuy
         customer_state: new_state,
         client: @client
       )
+    end
+
+    private
+
+    def self.create_endpoint(params)
+      return 'orders?include=tags' if params.key?(:taggable_keywords)
+
+      'orders'
+    end
+
+    def self.create_or_update_payload(params)
+      {
+        data: params.except(:taggable_keywords),
+        metadata: {
+          taggable_keywords: params[:taggable_keywords]
+        }
+      }
     end
   end
 end
