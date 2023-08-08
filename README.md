@@ -126,6 +126,12 @@ order.update_order_state(new_state)
 order.update_customer_state(new_state)
 ```
 
+#### Update location (with a Flybuy::Order object)
+
+```ruby
+order.update_order_state(longitude: 34.23, latitude: -8.05)
+```
+
 #### Update order state (with a Flybuy order id)
 
 ```ruby
