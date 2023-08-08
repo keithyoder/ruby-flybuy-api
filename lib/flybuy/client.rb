@@ -5,6 +5,7 @@ require 'net/http'
 module Flybuy
   class Client
     attr_accessor :url
+
     def initialize(access_token = nil, url = nil)
       @access_token = access_token || ENV['FLYBUY_ACCESS_TOKEN']
       @url = url || 'https://flybuy.radiusnetworks.com/api/v1/'

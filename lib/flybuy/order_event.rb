@@ -50,5 +50,23 @@ module Flybuy
         }
       )
     end
+
+    def self.update_location(order_id: nil, eta_seconds: nil, longitude: nil, latitude: nil, accuracy: nil, speed: nil, client: nil) # rubocop:disable Metrics/MethodLength
+      client ||= Flybuy.client
+      client.post(
+        'events/',
+        {
+          data: {
+            order_id: order_id,
+            event_type: 'location_update',
+            eta_seconds: eta_seconds,
+            longitude: longitude,
+            latitude: latitude,
+            accuracy: accuracy,
+            speed: speed
+          }
+        }
+      )
+    end
   end
 end

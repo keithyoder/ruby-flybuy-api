@@ -82,7 +82,19 @@ module Flybuy
       )
     end
 
-    private
+    def update_location(eta_seconds: nil, longitude: nil, latitude: nil, accuracy: nil, speed: nil)
+      return if order_id.nil?
+
+      Flybuy::OrderEvent.update_location(
+        order_id: order_id,
+        eta_seconds: eta_seconds,
+        longitude: longitude,
+        latitude: latitude,
+        accuracy: accuracy,
+        speed: speed,
+        client: @client
+      )
+    end
 
     def self.create_endpoint(params)
       return 'orders?include=tags' if params.key?(:taggable_keywords)
