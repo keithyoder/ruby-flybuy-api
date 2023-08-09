@@ -21,7 +21,7 @@ module Flybuy
       )
     end
 
-    def self.update_customer_state(order_id: nil, customer_state: nil, eta_seconds: nil, client: nil) # rubocop:disable Metrics/MethodLength
+    def self.update_customer_state(order_id: nil, customer_state: nil, eta_seconds: nil, spot_identifier: nil, client: nil) # rubocop:disable Metrics/MethodLength
       client ||= Flybuy.client
       client.post(
         'events/',
@@ -30,7 +30,8 @@ module Flybuy
             order_id: order_id,
             event_type: 'state_change',
             customer_state: customer_state,
-            eta_seconds: eta_seconds
+            eta_seconds: eta_seconds,
+            spot_identifier: spot_identifier
           }
         }
       )
