@@ -14,7 +14,7 @@ module Flybuy
                     area_name possible_areas customer_id site_id site_partner_identifier spot_identifier
                     customer_name customer_car_type customer_car_color customer_license_plate customer_rating_value
                     customer_rating_comments pickup_window pickup_type push_token tag_ids delivery_error_reviewed_at
-                    delivery_errored_at delivery_identifier delivery_source pos_identifier].freeze
+                    delivery_errored_at delivery_identifier delivery_source pos_identifier pay_state].freeze
     attr_accessor(*ATTRIBUTES)
 
     def initialize(client: nil, data: nil)
@@ -56,7 +56,7 @@ module Flybuy
       return if order_id.nil?
 
       client = Flybuy.client
-      response = client.put("orders/#{order_id}", create_or_update_payload(params))
+      response = client.put("orders/#{order_id}", Flybuy::Order.create_or_update_payload(params))
       return nil if response[:data].empty?
 
       Flybuy::Order.new(client: client, data: response[:data])
