@@ -65,6 +65,7 @@ module Flybuy
     end
 
     def self.create(hash)
+      @client = Flybuy.client
       response = @client.post(
         'sites/',
         {
