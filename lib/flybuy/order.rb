@@ -36,12 +36,16 @@ module Flybuy
       Flybuy::Order.new(client: client, data: response[:data])
     end
 
-    def self.find_by_partner_identifier(partner_identifier)
+    def self.find_by_partner_identifier(partner_identifier, all: false)
       client = Flybuy.client
       response = client.get('orders', { partner_identifier: partner_identifier })
       return nil if response[:data].empty?
 
-      Flybuy::Order.new(client: client, data: response[:data].first)
+      orders = response[:data].map { |order| Flybuy::Order.new(client: client, data: order) }
+      return orders if all
+
+      # initial versions of the gem only returned one order.  Defaulting to all: false maintains compatibility.
+      orders.first
     end
 
     def self.find(id)
