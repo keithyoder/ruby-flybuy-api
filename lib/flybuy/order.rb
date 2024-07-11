@@ -101,6 +101,16 @@ module Flybuy
       )
     end
 
+    def pickup_currently_open?
+      store_hours = ::Flybuy::SiteStoreHours.find_by_site(site_id)
+      return true if store_hours.empty?
+
+      hours = store_hours.find { |hours| hours.pickup_type == pickup_type } ||
+        store_hours.find { |hours| hours.pickup_type == nil }
+
+      hours.currently_open?
+    end
+
     def self.create_endpoint(params)
       return 'orders?include=tags' if params.key?(:taggable_keywords)
 

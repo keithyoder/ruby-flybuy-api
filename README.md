@@ -132,6 +132,12 @@ order.update_customer_state(new_state)
 order.update_order_state(longitude: 34.23, latitude: -8.05)
 ```
 
+#### Check if pickup is currently available for this order (using SiteStoreHours) (with a Flybuy::Order object)
+
+```ruby
+order.pickup_currently_open?
+```
+
 #### Update order state (with a Flybuy order id)
 
 ```ruby
