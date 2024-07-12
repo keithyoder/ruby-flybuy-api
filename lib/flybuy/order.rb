@@ -88,7 +88,7 @@ module Flybuy
     end
 
     def update_location(eta_seconds: nil, longitude: nil, latitude: nil, accuracy: nil, speed: nil)
-      return if order_id.nil?
+      return if order_id.blank?
 
       Flybuy::OrderEvent.update_location(
         order_id: order_id,
