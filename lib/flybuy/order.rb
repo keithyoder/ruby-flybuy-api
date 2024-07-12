@@ -103,7 +103,7 @@ module Flybuy
 
     def pickup_currently_open?
       store_hours = ::Flybuy::SiteStoreHours.find_by_site(site_id)
-      return true if store_hours.nil?
+      return true if store_hours.blank?
 
       hours = store_hours.find { |hours| hours.pickup_type == pickup_type } ||
         store_hours.find { |hours| hours.pickup_type == nil }
