@@ -88,7 +88,7 @@ module Flybuy
     end
 
     def update_location(eta_seconds: nil, longitude: nil, latitude: nil, accuracy: nil, speed: nil)
-      return if order_id.nil?
+      return if order_id.blank?
 
       Flybuy::OrderEvent.update_location(
         order_id: order_id,
@@ -103,7 +103,7 @@ module Flybuy
 
     def pickup_currently_open?
       store_hours = ::Flybuy::SiteStoreHours.find_by_site(site_id)
-      return true if store_hours.empty?
+      return true if store_hours.blank?
 
       hours = store_hours.find { |hours| hours.pickup_type == pickup_type } ||
         store_hours.find { |hours| hours.pickup_type == nil }
