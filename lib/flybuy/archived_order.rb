@@ -16,7 +16,8 @@ module Flybuy
                     sdk_os_version sdk_version site_name site_operational_status site_partner_identifier
                     sms_delivered_timestamps sms_failed_timestamps sms_undelivered_timestamps timezone
                     trip_distance_meters viewed_timestamps wait_time_seconds waiting_at wrong_site_arrival_at
-                    wrong_site_id app_authorization_id customer_id project_id site_id created_at updated_at].freeze
+                    wrong_site_id app_authorization_id customer_id project_id site_id created_at updated_at
+                    delivery_source].freeze
     attr_accessor(*ATTRIBUTES)
 
     def initialize(client, hash)
@@ -29,15 +30,11 @@ module Flybuy
     end
 
     def self.all(range)
-      @client = Flybuy.client
-      @archived_orders = []
-      next_url = "archived_orders?start_time=#{range.begin.iso8601}&end_time=#{range.end.iso8601}"
-      until next_url.nil?
-        response = @client.get(next_url.gsub(@client.url, ''))
-        @archived_orders.concat(response[:data].collect { |site| Flybuy::ArchivedOrder.new(@client, site) })
-        next_url = response[:pages][:next]
-      end
-      @archived_orders
+      fetch(range) { |result| result.collect { |ao| Flybuy::ArchivedOrder.new(@client, ao) } }
+    end
+
+    def self.hash(range)
+      fetch(range) { |result| result }
     end
 
     def self.find_by_partner_identifier(partner_identifier, range)
@@ -51,6 +48,22 @@ module Flybuy
         }
       )
       return Flybuy::ArchivedOrder.new(client, res[:data].first) if res[:data].present?
+    end
+
+    private
+
+    def self.fetch(range)
+      @client = Flybuy.client
+      @archived_orders = []
+      next_url = "archived_orders?start_time=#{range.begin.iso8601}&end_time=#{range.end.iso8601}"
+      until next_url.nil?
+        response = @client.get(next_url.gsub(@client.url, ''))
+        @archived_orders.concat(
+          yield(response[:data])
+        )
+        next_url = response[:pages][:next]
+      end
+      @archived_orders
     end
   end
 end
