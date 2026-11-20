@@ -23,6 +23,12 @@ RSpec.describe Flybuy::SiteStoreHours do
       expect(store_hours.regular_hours).to eq(regular_hours)
     end
 
+    it 'keeps the client it posted with' do
+      store_hours = described_class.create(store_hours_params)
+
+      expect(store_hours.instance_variable_get(:@client)).to be(client)
+    end
+
     it 'posts the hash wrapped in a data key to the site store hours path' do
       described_class.create(store_hours_params)
 
