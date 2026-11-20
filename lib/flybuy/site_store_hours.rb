@@ -70,7 +70,7 @@ module Flybuy
           data: hash
         }
       )
-      Flybuy::SiteStoreHours.new(@client, response)
+      Flybuy::SiteStoreHours.new(client, response[:data])
     end
 
     def self.update(id: nil, site_store_hours: nil, attributes: {})
