@@ -14,6 +14,12 @@ Dates for 0.1.7 and earlier are the dates of the version bump commits.
   key. Before, the returned site had no `id`, `name` or other attributes.
 - `Flybuy::SiteStoreHours.create` now returns store hours built from the
   response's `data` key, with the same problem fixed.
+- `Flybuy::SiteStoreHours.create` passes its client to the new store hours
+  object. Before, it passed the class-level `@client`, which could be `nil`.
+
+### Changed
+
+- Gem `changelog_uri` metadata points to `CHANGELOG.md`.
 
 ## [0.1.7] - 2024-09-12
 
