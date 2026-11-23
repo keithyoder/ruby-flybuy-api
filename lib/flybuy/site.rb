@@ -72,7 +72,7 @@ module Flybuy
           data: hash
         }
       )
-      Flybuy::Site.new(@client, response)
+      Flybuy::Site.new(@client, response[:data])
     end
 
     def self.update(id: nil, site: nil, attributes: {})
